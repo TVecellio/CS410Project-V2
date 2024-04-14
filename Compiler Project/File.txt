@@ -1,0 +1,13 @@
+public class Test {
+    public static void main(String[] args) {
+        int[] myArray = new int[10];
+        int a = 3;
+        int l = 14;
+        a = a + l;
+        int y = a;
+        System.out.println("we");
+        while (a < l) {
+            a = a + 1;
+        }
+    }
+}
