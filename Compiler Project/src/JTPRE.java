@@ -2,10 +2,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.*;
-public class JTP {
+public class JTPRE {
 	int op;
 	Scanner in = new Scanner(System.in);
-	public JTP() throws IOException {
+	public JTPRE() throws IOException {
 		input();
 	}
 	public void input() throws IOException {
@@ -34,13 +34,15 @@ public class JTP {
 	}
 	public String toPython(String fileName) throws IOException {
 		String python = "";
+		correctSemantics(fileName);
+		checkBrackets(fileName);
 		try {
 	        FileReader fileReader = new FileReader(fileName);
 	        BufferedReader bufferedReader = new BufferedReader(fileReader);
 	        String line;
 	       while ((line = bufferedReader.readLine()) != null) {
-	    	   //System.out.println(correctSyntax(line));
 		if(correctSyntax(line) == false) {
+			System.out.println("Incorrect Syntax");
 			System.out.println(line);
 		}
 	       }
@@ -123,7 +125,6 @@ public class JTP {
 	}
 
   private boolean correctSemantics(String filename) throws IOException {
-      //String type = null;
       Map<String, String> variableTypes = new HashMap<>();
       Set<String> variablesInMathOperations = new HashSet<>();
       try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -160,11 +161,10 @@ public class JTP {
               if(variable.matches("-?\\d+(\\.\\d+)")){
             	  type = "double";
               }
-              System.out.println("Type: "+ type);
-              System.out.println("Var: "+variable);
               if (commonType == null) {
                   commonType = type;
               } else if (!commonType.equals(type)) {
+            	  System.out.println("Incorrect Semantics");
                   return false; // Different types found
               }
           }
@@ -197,6 +197,9 @@ public boolean checkBrackets(String fileName){
  }catch (IOException e) {
         System.out.println("An error occurred while reading the file: " + e.getMessage());  
 }
+	if(stack.isEmpty() == false) {
+		System.out.println("Bracket Imbalance");
+	}
 	 return stack.isEmpty();
 }
 }
